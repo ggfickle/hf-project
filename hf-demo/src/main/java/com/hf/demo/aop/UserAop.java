@@ -57,9 +57,10 @@ public class UserAop {
 
     @SneakyThrows
     @Around("point()")
-    public void doAround(ProceedingJoinPoint proceedingJoinPoint) {
+    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) {
         log.info("Aop do around-start");
-        proceedingJoinPoint.proceed();
+        Object proceed = proceedingJoinPoint.proceed();
         log.info("Aop do around-end");
+        return proceed;
     }
 }
