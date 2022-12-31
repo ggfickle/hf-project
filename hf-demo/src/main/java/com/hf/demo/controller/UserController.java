@@ -1,6 +1,7 @@
 package com.hf.demo.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ public class UserController {
 
     @GetMapping()
     public String get() {
+        // 可在此也调用add方法的Aop执行
+        ((UserController)AopContext.currentProxy()).add();
         log.info("Get User");
         return "James Xie";
     }
