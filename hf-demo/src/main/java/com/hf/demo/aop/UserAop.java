@@ -20,7 +20,8 @@ import java.util.Arrays;
 public class UserAop {
 
 
-    @Pointcut("execution(* com.hf.demo.controller..*(..))")
+//    @Pointcut("execution(* com.hf.demo.controller..*(..))")
+    @Pointcut("@annotation(com.hf.demo.aop.AopProxy)")
     private void point() {
     }
 
