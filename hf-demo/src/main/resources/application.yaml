@@ -22,3 +22,8 @@ spring:
         max-idle: 10
         min-idle: 10
     client-type: lettuce
+  kafka:
+    producer:
+      bootstrap-servers: 192.168.1.101:9092
+    consumer:
+      bootstrap-servers: 192.168.1.101:9092
