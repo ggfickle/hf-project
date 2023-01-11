@@ -1,8 +1,10 @@
 package com.hf.mybatis.service;
 
 import com.hf.mybatis.DO.User;
+import com.hf.mybatis.enums.UserStatusEnum;
 import com.hf.mybatis.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
  * @description
  * @date 2023/1/10 21:45
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -26,5 +29,13 @@ public class UserService {
             throw new RuntimeException("user not exist");
         }
         return user;
+    }
+
+    public void updateUserStatus(User user) {
+        if (user.getStatus() == null || user.getId() <= 0) {
+            throw new IllegalArgumentException();
+        }
+        getUserById(user.getId());
+        userMapper.updateUserStatus(user.getId(), user.getStatus().getCode());
     }
 }

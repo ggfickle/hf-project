@@ -1,5 +1,6 @@
 package com.hf.mybatis.DO;
 
+import com.hf.mybatis.enums.UserStatusEnum;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,7 +21,7 @@ public class User {
 
     private String password;
 
-    private int status;
+    private UserStatusEnum status;
 
     private Date createTime;
 

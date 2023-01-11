@@ -8,6 +8,9 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:192.168.1.101}:${MYSQL_PORT:3306}/testdb?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: ${MYSQL_USERNAME:root}
     password: ${MYSQL_PASSWORD:xhf0724.}
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 mybatis:
   mapper-locations: classpath*:mapper/**/*.xml
 

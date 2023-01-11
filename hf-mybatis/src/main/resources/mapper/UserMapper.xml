@@ -7,7 +7,7 @@
         <result column="name" property="name"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
-        <result column="status" property="status"/>
+        <result column="status" property="status" typeHandler="com.hf.mybatis.config.EnumsTypeHandler"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -16,4 +16,7 @@
         select * from hf_user where id = #{id}
     </select>
 
+    <update id="updateUserStatus">
+        update hf_user set status = #{status} where id = #{id}
+    </update>
 </mapper>

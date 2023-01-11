@@ -1,7 +1,6 @@
 package com.hf.mybatis.mapper;
 
 import com.hf.mybatis.DO.User;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -12,4 +11,6 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
 
     User getById(@Param("id") int id);
+
+    int updateUserStatus(@Param("id") int id, @Param("status") int status);
 }
