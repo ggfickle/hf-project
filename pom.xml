@@ -11,6 +11,7 @@
     <modules>
         <module>hf-demo</module>
         <module>hf-socket</module>
+        <module>hf-mybatis</module>
     </modules>
 
     <properties>
@@ -31,6 +32,7 @@
         <lombok.version>1.18.22</lombok.version>
         <hutool.version>5.8.0.M3</hutool.version>
         <rocketmq-springboot.version>2.2.0</rocketmq-springboot.version>
+        <mybatis.version>2.1.4</mybatis.version>
     </properties>
 
     <dependencyManagement>
@@ -78,6 +80,12 @@
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>${rocketmq-springboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

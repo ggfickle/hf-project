@@ -1,0 +1,13 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: hf-mybatis
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:192.168.1.101}:${MYSQL_PORT:3306}/testdb?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:xhf0724.}
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+
