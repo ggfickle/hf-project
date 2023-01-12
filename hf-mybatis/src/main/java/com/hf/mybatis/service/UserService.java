@@ -3,6 +3,7 @@ package com.hf.mybatis.service;
 import com.hf.mybatis.DO.User;
 import com.hf.mybatis.enums.UserStatusEnum;
 import com.hf.mybatis.mapper.UserMapper;
+import com.hf.mybatis.utils.JacksonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class UserService {
         if (user == null) {
             throw new RuntimeException("user not exist");
         }
+        log.info("result:{}", JacksonUtils.writeValueAsString(user));
         return user;
     }
 
