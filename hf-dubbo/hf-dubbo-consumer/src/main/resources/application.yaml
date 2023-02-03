@@ -1,0 +1,15 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: dubbo-consumer
+dubbo:
+  application:
+    name: dubbo-consumer
+  registry:
+    address: zookeeper://192.168.1.101:2181
+    id: zk-registry
+    timeout: 60000
+  protocol:
+    name: dubbo
+    port: -1
