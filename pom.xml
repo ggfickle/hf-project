@@ -12,6 +12,10 @@
         <module>hf-demo</module>
         <module>hf-socket</module>
         <module>hf-mybatis</module>
+        <module>hf-dubbo</module>
+        <module>hf-dubbo/hf-dubbo-provider</module>
+        <module>hf-dubbo/hf-dubbo-consumer</module>
+        <module>hf-dubbo/hf-dubbo-common</module>
     </modules>
 
     <properties>
@@ -33,6 +37,7 @@
         <hutool.version>5.8.0.M3</hutool.version>
         <rocketmq-springboot.version>2.2.0</rocketmq-springboot.version>
         <mybatis.version>2.1.4</mybatis.version>
+        <dubbo.version>3.0.7</dubbo.version>
     </properties>
 
     <dependencyManagement>
@@ -86,6 +91,21 @@
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-zookeeper</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
