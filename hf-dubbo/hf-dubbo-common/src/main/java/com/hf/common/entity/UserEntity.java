@@ -1,11 +1,13 @@
 package com.hf.common.entity;
 
+import java.io.Serializable;
+
 /**
  * @author xiehongfei
  * @description
  * @date 2023/2/3 21:25
  */
-public class UserEntity {
+public class UserEntity implements Serializable {
 
     private String username;
 
