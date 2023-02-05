@@ -20,3 +20,5 @@ dubbo:
     timeout: 60000
   scan:
     base-packages: com.hf.provider.service
+  consumer:
+    check: false

@@ -1,0 +1,2 @@
+CustomDubboFilter=com.hf.provider.filter.CustomDubboFilter
+tokenFilter=org.apache.dubbo.rpc.filter.TokenFilter
