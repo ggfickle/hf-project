@@ -19,4 +19,4 @@ dubbo:
     address: zookeeper://192.168.1.101:2181
     timeout: 60000
   provider:
-    filter: CustomDubboFilter,tokenFilter
+    filter: CustomDubboFilter
