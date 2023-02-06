@@ -13,8 +13,8 @@ spring:
         - 192.168.1.101:26379
         - 192.168.1.101:26380
         - 192.168.1.101:26381
-      password: xhf0724.
-    password: xhf0724.
+      password: 123456
+    password: 123456
     lettuce:
       pool:
         max-active: 1000
