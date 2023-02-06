@@ -63,7 +63,7 @@ public class ZookeeperLockServiceImpl implements ZookeeperLockService {
 //                                e.printStackTrace();
 //                            }
                             //打印各个线程执行结果
-                            System.out.println(name + "    执行业务方法，对count++ : " + count);
+                            LOGGER.info(name + "    执行业务方法，对count++ : " + count);
 
                             //执行成功后不要返回null，如果返回null，会继续执行while去竞争获取锁
                             return this.getPath();

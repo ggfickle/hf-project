@@ -1,6 +1,8 @@
 package com.hf.provider.filter;
 
 import org.apache.dubbo.rpc.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author xiehongfei
@@ -8,13 +10,15 @@ import org.apache.dubbo.rpc.*;
  * @date 2023/2/5 0:05
  */
 public class CustomDubboFilter implements Filter,Filter.Listener {
+    private static final Logger LOGGER = LogManager.getLogger(CustomDubboFilter.class);
+
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
         // before filter ...
-        System.out.println(invocation.getMethodName());
+        LOGGER.info("invoke--invocation.getMethodName()" + invocation.getMethodName());
         Result result = invoker.invoke(invocation);
         // after filter ...
-        System.out.println(result.getValue());
+        LOGGER.info("invoke--result.getValue()--" + result.getValue());
         return result;
     }
 

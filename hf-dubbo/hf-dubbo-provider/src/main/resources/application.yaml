@@ -20,6 +20,7 @@ dubbo:
     timeout: 60000
   provider:
     timeout: 30000
+    filter: CustomDubboFilter
 
 zookeeper:
   #每次重试时间间隔，单位毫秒
