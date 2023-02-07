@@ -16,6 +16,7 @@
         <module>hf-dubbo/hf-dubbo-provider</module>
         <module>hf-dubbo/hf-dubbo-consumer</module>
         <module>hf-dubbo/hf-dubbo-common</module>
+        <module>hf-threadPool</module>
     </modules>
 
     <properties>
