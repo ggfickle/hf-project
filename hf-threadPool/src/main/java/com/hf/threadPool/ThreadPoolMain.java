@@ -23,6 +23,7 @@ public class ThreadPoolMain {
         threadPoolTaskExecutor.setMaxPoolSize(60);
         threadPoolTaskExecutor.setQueueCapacity(100);
         threadPoolTaskExecutor.setKeepAliveSeconds(60);
+        // 重写ThreadFactory后此处设置的前缀不生效
         threadPoolTaskExecutor.setThreadNamePrefix("hf-thread-");
         // rewrite
 //        threadPoolTaskExecutor.setThreadFactory((runnable)->{
