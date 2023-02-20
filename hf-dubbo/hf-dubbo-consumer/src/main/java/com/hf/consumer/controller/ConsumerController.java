@@ -3,6 +3,7 @@ package com.hf.consumer.controller;
 import com.hf.common.api.UserService;
 import com.hf.common.api.ZookeeperLockService;
 import com.hf.common.entity.UserEntity;
+import org.apache.dubbo.common.threadpool.support.fixed.FixedThreadPool;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author xiehongfei

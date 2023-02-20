@@ -7,16 +7,16 @@ dubbo:
   application:
     name: dubbo-provider
   registry:
-    address: zookeeper://192.168.1.101:2181
+    address: zookeeper://localhost:2181
     timeout: 60000
   protocol:
     name: dubbo
     port: -1
   config-center:
-    address: zookeeper://192.168.1.101:2181
+    address: zookeeper://localhost:2181
     timeout: 60000
   metadata-report:
-    address: zookeeper://192.168.1.101:2181
+    address: zookeeper://localhost:2181
     timeout: 60000
   provider:
     timeout: 30000
@@ -28,7 +28,7 @@ zookeeper:
   #重试次数
   maxRetries: 3
   #zookeeper服务连接id与端口
-  connectString: 192.168.1.101:2181
+  connectString: localhost:2181
   #会话超时时间，单位毫秒
   sessionTimeoutMs: 5000
   #连接创建超时时间，单位毫秒
