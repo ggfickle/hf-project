@@ -20,7 +20,7 @@ public class ZookeeperLockServiceImpl implements ZookeeperLockService {
     /**
      * 表示开启多个线程并行执行
      */
-    private static final int THREAD_COUNT = 100;
+    private static final int THREAD_COUNT = 300;
 
     @Autowired
     private ShardReentrantLockComponent lockComponent;

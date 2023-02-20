@@ -17,6 +17,8 @@
         <module>hf-dubbo/hf-dubbo-consumer</module>
         <module>hf-dubbo/hf-dubbo-common</module>
         <module>hf-threadPool</module>
+        <module>hf-elasticsearch</module>
+        <module>hf-common</module>
     </modules>
 
     <properties>
