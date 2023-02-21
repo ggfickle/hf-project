@@ -1,13 +1,14 @@
 package com.hf.es.service;
 
 import com.hf.common.utils.JacksonUtils;
-import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.bulk.BulkItemResponse;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.get.*;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -19,7 +20,6 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Date;
@@ -31,31 +31,32 @@ import java.util.Map;
  * @description
  * @date 2023/2/20 22:27
  */
-@Service
-@RequiredArgsConstructor
-public class EsService {
-
-    private final RestHighLevelClient restHighLevelClient;
-
+public class EsCURDService {
 
     public static void main(String[] args) throws Exception {
-        RestHighLevelClient restHighLevelClient = new RestHighLevelClient(
-                RestClient.builder(new HttpHost("192.168.1.105", 9200, "http"))
-        );
-//        createIndex(restHighLevelClient);
+        try (RestHighLevelClient restHighLevelClient = new RestHighLevelClient(
+                RestClient.builder(new HttpHost("localhost", 9200, "http"))
+        )) {
+            //        createIndex(restHighLevelClient);
 
 //        insertIndexData(restHighLevelClient);
-
+//
 //        queryIndexData(restHighLevelClient);
 
 //        updateIndexData(restHighLevelClient);
 
-        deleteIndex(restHighLevelClient);
-        restHighLevelClient.close();
+//        deleteIndex(restHighLevelClient);
+
+            bulkRequest(restHighLevelClient);
+
+            multiGet(restHighLevelClient);
+
+        }
     }
 
     /**
-     * 创建索引
+     * 创建文档
+     *
      * @param restHighLevelClient
      * @throws IOException
      */
@@ -74,15 +75,16 @@ public class EsService {
     }
 
     /**
-     * 创建索引并且插入数据
+     * 创建文档并且插入数据
+     *
      * @param restHighLevelClient
      * @throws IOException
      */
     public static void insertIndexData(RestHighLevelClient restHighLevelClient) throws IOException {
         IndexRequest posterRequest = new IndexRequest("poster");
-        posterRequest.id("1");
+        posterRequest.id("2");
         Map<String, String> map = new HashMap<>();
-        map.put("user", "kimchy");
+        map.put("user", "xiehongfe");
         map.put("postDate", "2013-01-30");
         map.put("message", "trying out Elasticsearch");
         String jsonValue = JacksonUtils.writeValueAsString(map);
@@ -97,6 +99,7 @@ public class EsService {
 
     /**
      * 查询
+     *
      * @param restHighLevelClient
      * @throws Exception
      */
@@ -140,4 +143,59 @@ public class EsService {
             System.out.println("DELETE SUCCESS");
         }
     }
- }
+
+    /**
+     * 批量查询
+     */
+    public static void multiGet(RestHighLevelClient restHighLevelClient) throws IOException {
+        MultiGetRequest multiGetRequest = new MultiGetRequest();
+        multiGetRequest.add("poster", "1");
+        multiGetRequest.add("poster", "2");
+
+        MultiGetResponse multiGetItemResponses = restHighLevelClient.mget(multiGetRequest, RequestOptions.DEFAULT);
+        for (MultiGetItemResponse multiGetItemResponse : multiGetItemResponses) {
+            System.out.println("multiGetItemResponse.getFailure() = " + multiGetItemResponse.getFailure());
+            GetResponse response = multiGetItemResponse.getResponse();
+            if (response.isExists()) {
+                System.out.println("response.getVersion() = " + response.getVersion());
+                System.out.println("response.getSourceAsString() = " + response.getSourceAsString());
+            }
+        }
+    }
+
+    public static void bulkRequest(RestHighLevelClient restHighLevelClient) throws IOException {
+        BulkRequest bulkRequest = new BulkRequest();
+        bulkRequest.add(new IndexRequest("bulk1").id("1")
+                .source(XContentType.JSON, "name", "xiehongfei", "age","12"));
+        bulkRequest.add(new IndexRequest("bulk1").id("2")
+                .source(XContentType.JSON, "name", "lisi", "age","16"));
+        bulkRequest.add(new UpdateRequest("bulk1", "2")
+        .doc(XContentType.JSON, "age", "19"));
+        BulkResponse bulkItemResponses = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+        if (bulkItemResponses.hasFailures()) {
+            System.out.println("has failures!!!!!");
+            return;
+        }
+        for (BulkItemResponse bulkItemResponse : bulkItemResponses) {
+            DocWriteResponse itemResponse = bulkItemResponse.getResponse();
+            // 根据操作类型检测执行结果
+            switch (bulkItemResponse.getOpType()) {
+                case INDEX:
+                case CREATE:
+                    // 处理创建请求
+                    IndexResponse indexResponse = (IndexResponse) itemResponse;
+                    System.out.println(JacksonUtils.writeValueAsString(indexResponse));
+                    break;
+                case UPDATE:
+                    // 处理更新请求
+                    UpdateResponse updateResponse = (UpdateResponse) itemResponse;
+                    System.out.println(JacksonUtils.writeValueAsString(updateResponse));
+                    break;
+                case DELETE:
+                    // 处理删除请求
+                    DeleteResponse deleteResponse = (DeleteResponse) itemResponse;
+                    System.out.println(JacksonUtils.writeValueAsString(deleteResponse));
+            }
+        }
+    }
+}
