@@ -1,6 +1,6 @@
 package com.hf.es.service;
 
-import com.hf.common.config.JacksonUtils;
+import com.hf.common.utils.JacksonUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.DocWriteResponse;
