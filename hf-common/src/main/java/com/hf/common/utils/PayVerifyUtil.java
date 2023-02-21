@@ -5,6 +5,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.PrivateKey;
@@ -49,7 +50,7 @@ public class PayVerifyUtil {
 
         // 3. 使用MD5算法对拼接好的字符串进行加密
         MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] digest = md.digest(content.getBytes("UTF-8"));
+        byte[] digest = md.digest(content.getBytes(StandardCharsets.UTF_8));
         String signValue = Hex.encodeHexString(digest).toUpperCase();
 
         // 4. 比对签名值

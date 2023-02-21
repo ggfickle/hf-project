@@ -2,7 +2,9 @@ package com.hf.es.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
+import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +20,18 @@ public class ESConfig {
 
     @Bean(destroyMethod = "close", name = "restHighLevelClient")
     public RestHighLevelClient createEsClientBean() {
-       return new RestHighLevelClient(
-                RestClient.builder(new HttpHost("192.168.1.105", 9200, "http"))
-        );
+        RestClientBuilder restClientBuilder = RestClient.builder(new HttpHost("localhost", 9200, "http"));
+        restClientBuilder.setRequestConfigCallback(
+                requestConfigBuilder -> {
+                    return requestConfigBuilder
+                            .setConnectTimeout(10000) // 设置连接超时时间，5秒
+                            .setSocketTimeout(60000); // 设置请求超时时间，1分种
+                });
+        restClientBuilder.setHttpClientConfigCallback(
+                httpClientBuilder -> httpClientBuilder.setDefaultIOReactorConfig(
+                IOReactorConfig.custom()
+                        .setIoThreadCount(10) // 设置线程数
+                        .build()));
+        return new RestHighLevelClient(restClientBuilder);
     }
 }
