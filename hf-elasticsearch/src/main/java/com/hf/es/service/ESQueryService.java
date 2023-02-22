@@ -8,15 +8,12 @@ import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Cancellable;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
@@ -25,8 +22,9 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
-import javax.naming.directory.SearchResult;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ESQueryService {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         try (RestHighLevelClient restHighLevelClient = new RestHighLevelClient(
                 RestClient.builder(new HttpHost("localhost", 9200, "http"))
         )) {
@@ -46,7 +44,7 @@ public class ESQueryService {
 
 //            searchRequest(restHighLevelClient);
 
-            matchQuery(restHighLevelClient);
+            commonQuery(restHighLevelClient);
         }
 
     }
@@ -54,13 +52,14 @@ public class ESQueryService {
     @SneakyThrows
     public static void createIndex(RestHighLevelClient restHighLevelClient) {
         IndexRequest indexRequest = new IndexRequest("user");
-        indexRequest.id("1");
+        indexRequest.id("3");
 
         UserEntity userEntity =
                 new UserEntity()
-                        .setName("李志")
-                        .setAge(16)
-                        .setAddress("南京");
+                        .setName("张三")
+                        .setAge(12)
+                        .setAddress("合肥")
+                        .setBirthDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-03-01 00:00:00"));
         indexRequest.source(JacksonUtils.writeValueAsString(userEntity), XContentType.JSON);
 
         // 同步创建
@@ -71,7 +70,8 @@ public class ESQueryService {
                 new ActionListener<IndexResponse>() {
                     @Override
                     public void onResponse(IndexResponse indexResponse) {
-                        System.out.println("user index create success");
+                        System.out.println(JacksonUtils.writeValueAsString(indexResponse));
+                        System.out.println("user index " + indexResponse.getResult().getLowercase() + " success");
                     }
 
                     @Override
@@ -108,7 +108,7 @@ public class ESQueryService {
         }
     }
 
-    public static void matchQuery(RestHighLevelClient restHighLevelClient) throws IOException {
+    public static void commonQuery(RestHighLevelClient restHighLevelClient) throws IOException, ParseException {
         SearchRequest searchRequest = new SearchRequest();
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         QueryBuilder queryBuilder = null;
@@ -116,7 +116,9 @@ public class ESQueryService {
 //        queryBuilder = matchAllQuery();
 //        queryBuilder = matchQuery();
 //        queryBuilder = matchPhraseQuery();
-        queryBuilder = termQuery();
+//        queryBuilder = termQuery();
+//        queryBuilder = termsQuery();
+        queryBuilder = rangeQuery();
 
         searchSourceBuilder.query(queryBuilder);
         searchRequest.source(searchSourceBuilder);
@@ -174,5 +176,20 @@ public class ESQueryService {
         // 可查询到,加上.keyword即可在text上进行查询
         termQueryBuilder = QueryBuilders.termQuery("name.keyword", "李志");
         return termQueryBuilder;
+    }
+
+    /**
+     * 等值in查询
+     *
+     * @return
+     */
+    public static QueryBuilder termsQuery() {
+        return QueryBuilders.termsQuery("name.keyword", "谢鸿飞", "李志");
+    }
+
+    public static QueryBuilder rangeQuery() throws ParseException {
+        return QueryBuilders.rangeQuery("age")
+                .gte(12)
+                .lte(16);
     }
 }

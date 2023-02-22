@@ -3,6 +3,8 @@ package com.hf.es.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
  * @author xiehongfei
  * @description
@@ -17,4 +19,7 @@ public class UserEntity {
     private int age;
 
     private String address;
+
+    private Date birthDate;
+
 }
