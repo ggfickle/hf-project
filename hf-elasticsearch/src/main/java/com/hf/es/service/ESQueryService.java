@@ -37,7 +37,7 @@ public class ESQueryService {
 
     public static void main(String[] args) throws Exception {
         try (RestHighLevelClient restHighLevelClient = new RestHighLevelClient(
-                RestClient.builder(new HttpHost("localhost", 9200, "http"))
+                RestClient.builder(new HttpHost("192.168.1.108", 9200, "http"))
         )) {
 
 //            createIndex(restHighLevelClient);
@@ -52,13 +52,13 @@ public class ESQueryService {
     @SneakyThrows
     public static void createIndex(RestHighLevelClient restHighLevelClient) {
         IndexRequest indexRequest = new IndexRequest("user");
-        indexRequest.id("3");
+        indexRequest.id("2");
 
         UserEntity userEntity =
                 new UserEntity()
-                        .setName("张三")
-                        .setAge(12)
-                        .setAddress("合肥")
+                        .setName("李志")
+                        .setAge(11)
+                        .setAddress("南京")
                         .setBirthDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2023-03-01 00:00:00"));
         indexRequest.source(JacksonUtils.writeValueAsString(userEntity), XContentType.JSON);
 
@@ -118,7 +118,8 @@ public class ESQueryService {
 //        queryBuilder = matchPhraseQuery();
 //        queryBuilder = termQuery();
 //        queryBuilder = termsQuery();
-        queryBuilder = rangeQuery();
+//        queryBuilder = rangeQuery();
+        queryBuilder = boolQuery();
 
         searchSourceBuilder.query(queryBuilder);
         searchRequest.source(searchSourceBuilder);
@@ -191,5 +192,15 @@ public class ESQueryService {
         return QueryBuilders.rangeQuery("age")
                 .gte(12)
                 .lte(16);
+    }
+
+    /**
+     * 组合查询
+     * @return
+     */
+    public static QueryBuilder boolQuery() {
+        return QueryBuilders.boolQuery()
+                .must(QueryBuilders.termQuery("name.keyword", "谢鸿飞"))
+                .should(QueryBuilders.rangeQuery("age").gte(12));
     }
 }
