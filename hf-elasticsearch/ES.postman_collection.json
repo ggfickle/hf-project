@@ -1,0 +1,589 @@
+{
+	"info": {
+		"_postman_id": "6578ec06-976d-4d77-a658-af783cc1716d",
+		"name": "ES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "base",
+			"item": [
+				{
+					"name": "GET /{index}/{type}/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/order/_doc/4",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"order",
+								"_doc",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /{index}/{type}/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": 2,\r\n\t\"status\": 2,\r\n\t\"total_price\": 200,\r\n\t\"create_time\": \"2019-12-12 12:20:22\",\r\n\t\"user\" : { \r\n\t\t\"id\" : 11,\r\n\t\t\"username\": \"tizi365\",\r\n\t\t\"phone\": \"13500001111\",\r\n\t\t\"address\" : \"ZHEJIANG长宁区001号\"\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/order/_doc/2",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"order",
+								"_doc",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /{index}/{type}/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9200/order/_doc/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"order",
+								"_doc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /{index}/_update/{id}",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"doc\":{\r\n    \"status\":2,\r\n    \"total_price\":200\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/order/_update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"order",
+								"_update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "query",
+			"item": [
+				{
+					"name": "match",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"match\": {\r\n      \"user.address\": \"长宁区\"\r\n    }\r\n  },\r\n  \"sort\": {\r\n      \"id\": {\r\n          \"order\": \"asc\"\r\n      }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/order/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"order",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "term",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"term\": {\r\n       \"total_price\": 200\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/order/_search",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"order",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "测试分词引擎",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"text\": \"疯狂星期四\",\r\n  \"analyzer\": \"smartcn\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9200/order/_analyze",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"order",
+								"_analyze"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查询所有的index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{linux}}:9200/_cat/indices?v",
+							"host": [
+								"{{linux}}"
+							],
+							"port": "9200",
+							"path": [
+								"_cat",
+								"indices"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "group by",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "es-data",
+			"item": [
+				{
+					"name": "findByid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByTitle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/findByTitle?title=体育",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"findByTitle"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "体育"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"title\": \"黄龙体育场\",\r\n    \"author\": \"杭州\",\r\n    \"price\": \"16.1\",\r\n    \"createTime\": \"2023-03-25 19:12:22\",\r\n    \"updateTime\": \"2023-02-26 19:12:22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8004/book",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delIndex",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/delIndex",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"delIndex"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createIndex",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/createIndex",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"createIndex"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/findAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"findAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "existDoc",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/existDoc",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"existDoc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "selectBreakUpText",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/selectBreakUpText?text=中国",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"selectBreakUpText"
+							],
+							"query": [
+								{
+									"key": "text",
+									"value": "中国"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "termQuery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/termQuery?value=未知",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"termQuery"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "未知"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "matchQuery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/matchQuery?value=喜",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"matchQuery"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "喜"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "prefixQuery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/prefixQuery?value=之",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"prefixQuery"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "之"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "wildcardQuery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/wildcardQuery?value=之",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"wildcardQuery"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "之"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rangeQuery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8004/book/rangeQuery?from=2023-02-25 22:31:41&to=2023-02-26 23:31:41",
+							"host": [
+								"localhost"
+							],
+							"port": "8004",
+							"path": [
+								"book",
+								"rangeQuery"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2023-02-25 22:31:41"
+								},
+								{
+									"key": "to",
+									"value": "2023-02-26 23:31:41"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
