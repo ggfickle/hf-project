@@ -33,10 +33,10 @@ public class Book implements Serializable {
     private Double price;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Field(type = FieldType.Date, format = DateFormat.basic_date_time)
+    @Field(type = FieldType.Date, format =  DateFormat.custom,pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Field(type = FieldType.Date, format = DateFormat.basic_date_time)
+    @Field(type = FieldType.Date, format =  DateFormat.custom,pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 }
