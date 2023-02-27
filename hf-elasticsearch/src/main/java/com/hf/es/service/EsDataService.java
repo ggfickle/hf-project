@@ -128,7 +128,7 @@ public class EsDataService {
 
     public void update() {
         Book book = elasticsearchRestTemplate.get("3", Book.class);
-        if (book== null) {
+        if (book == null) {
             throw new RuntimeException("not exist");
         }
         book = book.setUpdateTime(Date.from(Instant.now()));
@@ -148,7 +148,7 @@ public class EsDataService {
         NativeSearchQuery nativeSearchQuery = new NativeSearchQuery(queryBuilder);
         nativeSearchQuery.setPageable(PageRequest.of(pageNum == 0 ? 0 : pageNum - 1, pageSize));
         SearchHits<Book> bookSearchHits = elasticsearchRestTemplate.search(nativeSearchQuery, Book.class);
-        bookSearchHits.getSearchHits().forEach(searchHit->{
+        bookSearchHits.getSearchHits().forEach(searchHit -> {
             System.out.println("searchHit.getContent() = " + searchHit.getContent());
         });
         System.out.println("total = " + bookSearchHits.getTotalHits());
@@ -211,10 +211,9 @@ public class EsDataService {
     public void rangeQuery(String from, String to) throws ParseException {
         QueryBuilder queryBuilder =
                 QueryBuilders.rangeQuery("updateTime")
-                .from(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                        .parse(from))
-                .to(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                        .parse(to));
+                        .format("yyyy-MM-dd HH:mm:ss")
+                        .from(from)
+                        .to(to);
         commonSearch(queryBuilder);
     }
 
