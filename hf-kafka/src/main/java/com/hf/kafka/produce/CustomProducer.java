@@ -45,17 +45,17 @@ public class CustomProducer {
         }
 
         // 同步发送
-//        for (int i = 0; i < 100; i++) {
-//            try {
-//                RecordMetadata recordMetadata = kafkaProducer.send(new ProducerRecord<>("first", "xiehongfei" + i * 10)).get();
-//                System.out.println("recordMetadata.offset() = " + recordMetadata.offset());
-//                System.out.println("recordMetadata.timestamp() = " + recordMetadata.timestamp());
-//                System.out.println("recordMetadata.topic() = " + recordMetadata.topic());
-//            } catch (InterruptedException | ExecutionException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
+        for (int i = 0; i < 100; i++) {
+            try {
+                RecordMetadata recordMetadata = kafkaProducer.send(new ProducerRecord<>("first", "xiehongfei" + i * 10)).get();
+                System.out.println("recordMetadata.offset() = " + recordMetadata.offset());
+                System.out.println("recordMetadata.timestamp() = " + recordMetadata.timestamp());
+                System.out.println("recordMetadata.topic() = " + recordMetadata.topic());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+
+        }
         kafkaProducer.close();
     }
 }
