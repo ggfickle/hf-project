@@ -20,6 +20,7 @@
         <module>hf-elasticsearch</module>
         <module>hf-common</module>
         <module>hf-zookeeper</module>
+        <module>hf-kafka</module>
     </modules>
 
     <properties>
