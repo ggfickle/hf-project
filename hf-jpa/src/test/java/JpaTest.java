@@ -7,9 +7,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -57,5 +59,14 @@ public class JpaTest {
         log.info("删除id=1的数据以后");
         iterable = userRepository.findAll();
         iterable.forEach(x -> log.info("item:{}", x));
+    }
+
+    @Test
+    public void testSafeSort() {
+        // Jpa安全性排序
+        Sort.TypedSort<UserEntity> typedSort = Sort.sort(UserEntity.class);
+        Sort sort = typedSort.by(UserEntity::getId).descending();
+        List<UserEntity> userEntityList = userRepository.findAll(sort);
+        System.out.println("userEntityList = " + userEntityList);
     }
 }
