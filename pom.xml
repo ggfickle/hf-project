@@ -21,6 +21,9 @@
         <module>hf-common</module>
         <module>hf-zookeeper</module>
         <module>hf-kafka</module>
+        <module>hf-kafka/kafka-origin</module>
+        <module>hf-kafka/kafka-springboot</module>
+        <module>hf-jpa</module>
     </modules>
 
     <properties>

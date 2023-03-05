@@ -1,6 +1,5 @@
-package com.hf.kafka.produce;
+package produce;
 
-import com.hf.common.utils.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -16,7 +15,7 @@ import java.util.Properties;
  * @description
  * @date 2023/3/2 23:03
  */
-@Slf4j
+
 public class CustomProducerTransaction {
 
     public static void main(String[] args) {
@@ -49,7 +48,7 @@ public class CustomProducerTransaction {
             }
             kafkaProducer.commitTransaction();
         } catch (Exception e) {
-            log.error("exception: ", e);
+            System.out.println("exception: " + e);
             kafkaProducer.abortTransaction();
         } finally {
             kafkaProducer.close();

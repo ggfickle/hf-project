@@ -1,0 +1,15 @@
+#也可采用硬编码模式，更加灵活
+#spring:
+#  kafka:
+#    producer:
+#      bootstrap-servers: localhost:9092
+#      acks: -1
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      properties:
+#        "linger.ms": 1
+#    consumer:
+#      bootstrap-servers: localhost:9092
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      group-id: spring-test
