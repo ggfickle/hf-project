@@ -41,13 +41,17 @@ public class CustomProducer {
         // 压缩
         properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
 
+        // 解决同一分区内消息乱序问题：
+        // max.in.flight.requests.per.connection设置小于等于5，因为最大缓存5个请求元数据，所以最大保证5个请求的数据的有序
+        properties.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, 5);
+
 
         // 1 创建kafka生产对象
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
 
         for (int i = 0; i < 500; i++) {
             // 异步发送数据
-            kafkaProducer.send(new ProducerRecord<>("first", "xiehongfei" + i));
+//            kafkaProducer.send(new ProducerRecord<>("first", "xiehongfei" + i));
             // 异步发送带回调
 //            kafkaProducer.send(new ProducerRecord<>("first", "xiehongfei Callback" + i), (recordMetadata, e) -> {
 //                System.out.println(JacksonUtils.writeValueAsString(recordMetadata));
