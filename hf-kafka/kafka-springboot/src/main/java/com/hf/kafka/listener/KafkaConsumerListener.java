@@ -13,7 +13,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 @Configuration
 public class KafkaConsumerListener {
 
-    @KafkaListener(topics = "first")
+    @KafkaListener(topics = {"first"}, groupId = "group1", containerFactory = "kafkaListenerContainerFactory")
     public void consumerTopic(String msg) {
         log.info("spring-kafka收到消息：" + msg);
     }
