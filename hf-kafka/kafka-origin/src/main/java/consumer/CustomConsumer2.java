@@ -1,4 +1,4 @@
-package com.hf.kafka.consumer;
+package consumer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -20,7 +20,7 @@ import java.util.Properties;
  * @date 2023/3/5 13:12
  */
 @Slf4j
-public class CustomConsumer1 {
+public class CustomConsumer2 {
 
     public static void main(String[] args) {
         // 配置

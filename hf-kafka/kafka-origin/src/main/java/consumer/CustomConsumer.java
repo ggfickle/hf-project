@@ -1,4 +1,4 @@
-package com.hf.kafka.consumer;
+package consumer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -20,7 +20,7 @@ import java.util.Properties;
  * @date 2023/3/5 13:12
  */
 @Slf4j
-public class CustomConsumer2 {
+public class CustomConsumer {
 
     public static void main(String[] args) {
         // 配置
@@ -32,6 +32,12 @@ public class CustomConsumer2 {
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         // 设置消费者group_id
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
+
+        // 设置分区分配策略,消费组中其中一个消费者挂掉以后默认45秒后进行重新分区分配消费掉原分配到已挂掉节点的消息
+        // 默认RangeAssignor
+        // StickyAssignor
+        // RoundRobinAssignor
+        // CooperativeStickyAssignor
         properties.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, RoundRobinAssignor.class.getName());
 
         // 1 创建一个消费者

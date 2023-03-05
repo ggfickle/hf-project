@@ -1,4 +1,4 @@
-package com.hf.kafka.produce;
+package produce;
 
 import com.hf.common.utils.JacksonUtils;
 import org.apache.kafka.clients.producer.KafkaProducer;

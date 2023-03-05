@@ -1,24 +1,26 @@
-package com.hf.kafka.consumer;
+package consumer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.RoundRobinAssignor;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
 
 /**
- * 订阅主题对应的分区的消息
+ * 消费者
+ *
  * @author xiehongfei
  * @description
- * @date 2023/3/5 13:25
+ * @date 2023/3/5 13:12
  */
-public class CustomConsumerPartition {
+@Slf4j
+public class CustomConsumer1 {
 
     public static void main(String[] args) {
         // 配置
@@ -30,13 +32,12 @@ public class CustomConsumerPartition {
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         // 设置消费者group_id
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
+        properties.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, RoundRobinAssignor.class.getName());
 
         // 1 创建一个消费者
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(properties);
-        // 2 订阅主题对应的分区
-        ArrayList<TopicPartition> topicPartitions = new ArrayList<>();
-        topicPartitions.add(new TopicPartition("first", 0));
-        kafkaConsumer.assign(topicPartitions);
+        // 2 订阅主题
+        kafkaConsumer.subscribe(Collections.singletonList("first"));
 
         // 消费数据
         while (true) {
