@@ -8,7 +8,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,7 +38,7 @@ public class JpaTest {
         log.info("新增结果:{}\n", entity);
 
         // 修改数据
-        entity = userRepository.save(new UserEntity(1L, "哈哈哈哈", LocalDateTime.now(), "修改以后的结果"));
+        entity = userRepository.save(new UserEntity("哈哈哈哈", LocalDateTime.now(), "修改以后的结果"));
         log.info("按照id修改结果:{}\n", entity);
 
 
@@ -68,5 +70,14 @@ public class JpaTest {
         Sort sort = typedSort.by(UserEntity::getId).descending();
         List<UserEntity> userEntityList = userRepository.findAll(sort);
         System.out.println("userEntityList = " + userEntityList);
+    }
+
+    @Test
+    @Transactional
+    @Commit
+    public void testVersion() {
+        UserEntity byName = userRepository.findByName("234");
+        byName.setBirthday(LocalDateTime.now());
+        userRepository.save(byName);
     }
 }
