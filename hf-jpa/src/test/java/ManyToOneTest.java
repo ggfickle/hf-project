@@ -3,7 +3,6 @@ import com.hf.jpa.entity.Message;
 import com.hf.jpa.entity.UserEntity;
 import com.hf.jpa.repo.MessageRepo;
 import com.hf.jpa.repo.UserRepository;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +20,6 @@ import java.util.List;
  * @date 2023/3/7 22:48
  */
 @Slf4j
-@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JpaApplication.class)
 public class ManyToOneTest {
