@@ -1,18 +1,12 @@
 package com.hf.jpa.entity;
 
+import com.hf.jpa.entity.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,8 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user_info")
-@EntityListeners(AuditingEntityListener.class)
-public class UserEntity {
+public class UserEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,19 +69,6 @@ public class UserEntity {
 
     @Version
     private int version;
-
-    @CreatedBy
-    private String createBy;
-    @LastModifiedBy
-    private String modifiedBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    private Date createTime = new Date();
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
-    private Date updateTime = new Date();
 
     public UserEntity(String name, LocalDateTime birthday, String remark) {
         this.name = name;

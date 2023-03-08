@@ -2,7 +2,7 @@ import com.hf.jpa.JpaApplication;
 import com.hf.jpa.entity.Role;
 import com.hf.jpa.entity.UserEntity;
 import com.hf.jpa.repo.UserRepository;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,6 @@ import java.util.List;
  * @date 2023/3/7 23:15
  */
 @Slf4j
-@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JpaApplication.class)
 public class ManyToMany {
@@ -33,7 +32,7 @@ public class ManyToMany {
         UserEntity userEntity = new UserEntity();
         userEntity.setName("234");
         userEntity.setBirthday(LocalDateTime.now());
-        List<Role> roleList  = new ArrayList<>();
+        List<Role> roleList = new ArrayList<>();
         roleList.add(new Role().setName("管理员"));
         roleList.add(new Role().setName("平民"));
         userEntity.setRoleList(roleList);
