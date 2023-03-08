@@ -18,4 +18,6 @@ public class JPAConfig {
     public AuditorAware<String> auditorAware() {
         return () -> Optional.of("大师");
     }
+
+
 }

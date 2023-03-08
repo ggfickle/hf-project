@@ -1,9 +1,9 @@
 package com.hf.jpa.entity;
 
+import com.hf.jpa.entity.base.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * @author xiehongfei
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @Table(name = "user_account")
-public class AccountEntity {
+public class AccountEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

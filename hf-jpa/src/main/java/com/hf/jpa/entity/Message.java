@@ -1,5 +1,6 @@
 package com.hf.jpa.entity;
 
+import com.hf.jpa.entity.base.BaseEntity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_message")
 @Accessors(chain = true)
-public class Message {
+public class Message extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
