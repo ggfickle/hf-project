@@ -14,5 +14,7 @@ public class InnerClassMain {
         Parcel15 parcel15 = new Parcel15();
         Destination pDestination = parcel15.createPDestination();
         System.out.println(pDestination.readLabel());
+
+
     }
 }
